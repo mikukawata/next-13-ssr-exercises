@@ -2,15 +2,19 @@
 import React from 'react';
 
 import CartTable from './CartTable';
+import Spinner from '../../../components/Spinner/Spinner.js';
 
-function CheckoutFlow({
-  items,
-  taxRate,
-  handleDeleteItem,
-}) {
+function CheckoutFlow({ items, taxRate, handleDeleteItem }) {
+  if (items === null) {
+    return (
+      <div className='checkout-flow empty'>
+        <Spinner />
+      </div>
+    );
+  }
   if (items.length === 0) {
     return (
-      <div className="checkout-flow empty">
+      <div className='checkout-flow empty'>
         <p>Your Cart is Empty</p>
       </div>
     );
@@ -26,24 +30,21 @@ function CheckoutFlow({
   const total = subtotal + taxes;
 
   return (
-    <div className="checkout-flow">
-      <CartTable
-        items={items}
-        handleDeleteItem={handleDeleteItem}
-      />
+    <div className='checkout-flow'>
+      <CartTable items={items} handleDeleteItem={handleDeleteItem} />
 
-      <table className="checkout-totals">
+      <table className='checkout-totals'>
         <tbody>
           <tr>
-            <th scope="col">Subtotal</th>
+            <th scope='col'>Subtotal</th>
             <td>{priceFormatter.format(subtotal)}</td>
           </tr>
           <tr>
-            <th scope="col">Taxes</th>
+            <th scope='col'>Taxes</th>
             <td>{priceFormatter.format(taxes)}</td>
           </tr>
           <tr>
-            <th scope="col">Total</th>
+            <th scope='col'>Total</th>
             <td>{priceFormatter.format(total)}</td>
           </tr>
         </tbody>
